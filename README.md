@@ -1,4 +1,9 @@
-npm start
+1. Copy constants_public.js as constants.js
+
+Useful commands: 
+> npm start
+
+> npm run build
 
 Extensions:
 

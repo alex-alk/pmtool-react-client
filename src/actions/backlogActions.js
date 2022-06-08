@@ -5,11 +5,12 @@ import {
   GET_ERRORS,
   GET_PROJECT_TASK,
 } from "./types";
+import { API_URL } from "../constants";
 
 export const addProjectTask =
   (backlog_id, project_task, navigate) => async (dispatch) => {
     try {
-      await axios.post(`/api/backlog/${backlog_id}`, project_task);
+      await axios.post(`${API_URL}/api/backlog/${backlog_id}`, project_task);
       navigate(`/projectBoard/${backlog_id}`);
       dispatch({
         type: GET_ERRORS,
@@ -25,7 +26,7 @@ export const addProjectTask =
 
 export const getBacklog = (backlog_id) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/backlog/${backlog_id}`);
+    const res = await axios.get(`${API_URL}/api/backlog/${backlog_id}`);
     dispatch({
       type: GET_BACKLOG,
       payload: res.data,
@@ -41,7 +42,9 @@ export const getBacklog = (backlog_id) => async (dispatch) => {
 export const getProjectTask =
   (backlog_id, pt_id, navigate) => async (dispatch) => {
     try {
-      const res = await axios.get(`/api/backlog/${backlog_id}/${pt_id}`);
+      const res = await axios.get(
+        `${API_URL}/api/backlog/${backlog_id}/${pt_id}`
+      );
       dispatch({
         type: GET_PROJECT_TASK,
         payload: res.data,
@@ -54,7 +57,10 @@ export const getProjectTask =
 export const updateProjectTask =
   (backlog_id, pt_id, project_task, navigate) => async (dispatch) => {
     try {
-      await axios.patch(`/api/backlog/${backlog_id}/${pt_id}`, project_task);
+      await axios.patch(
+        `${API_URL}/api/backlog/${backlog_id}/${pt_id}`,
+        project_task
+      );
 
       navigate(`/projectBoard/${backlog_id}`);
       dispatch({
@@ -76,7 +82,7 @@ export const deleteProjectTask = (backlog_id, pt_id) => async (dispatch) => {
     )
   ) {
     try {
-      await axios.delete(`/api/backlog/${backlog_id}/${pt_id}`);
+      await axios.delete(`${API_URL}/api/backlog/${backlog_id}/${pt_id}`);
 
       dispatch({
         type: DELETE_PROJECT_TASK,
