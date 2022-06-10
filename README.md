@@ -1,4 +1,6 @@
-1. Copy constants_public.js as constants.js
+API: https://github.com/alex-alk/pmtool
+
+On deployment: copy constants_public.js as constants.js
 
 Useful commands: 
 > npm start
