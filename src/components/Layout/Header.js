@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/securityActions";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 class Header extends Component {
   logout() {
@@ -12,7 +13,7 @@ class Header extends Component {
   render() {
     const { validToken, user } = this.props.security;
     const userIsAuthenticated = (
-      <div className="collapse navbar-collapse" id="mobile-nav">
+      <Navbar.Collapse id="mobile-nav">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link className="nav-link text-light" to="/dashboard">
@@ -37,11 +38,11 @@ class Header extends Component {
             </Link>
           </li>
         </ul>
-      </div>
+      </Navbar.Collapse>
     );
 
     const userIsNotAuthenticated = (
-      <div className="collapse navbar-collapse" id="mobile-nav">
+      <Navbar.Collapse id="mobile-nav">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link className="nav-link text-white" to="/register">
@@ -54,7 +55,7 @@ class Header extends Component {
             </Link>
           </li>
         </ul>
-      </div>
+      </Navbar.Collapse>
     );
 
     let headerLinks;
@@ -66,22 +67,19 @@ class Header extends Component {
     }
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+      <Navbar
+        expand="sm"
+        className="navbar navbar-expand-sm navbar-dark bg-dark mb-4"
+      >
         <div className="container">
           <Link className="navbar-brand" to="/">
             Project Management Tool
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#mobile-nav"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
+
+          <Navbar.Toggle aria-controls="mobile-nav" />
           {headerLinks}
         </div>
-      </nav>
+      </Navbar>
     );
   }
 }
