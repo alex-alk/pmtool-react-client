@@ -7,17 +7,16 @@ import { getBacklog } from "../../actions/backlogActions";
 
 class ProjectBoard extends Component {
   //constructor to handle errors
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       errors: {},
     };
+    const { id } = props.params;
+    props.getBacklog(id);
   }
 
-  componentDidMount() {
-    const { id } = this.props.params;
-    this.props.getBacklog(id);
-  }
+  componentDidMount() {}
 
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
