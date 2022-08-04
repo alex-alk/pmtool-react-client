@@ -7,16 +7,20 @@ import { getBacklog } from "../../actions/backlogActions";
 
 class ProjectBoard extends Component {
   //constructor to handle errors
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       errors: {},
+      project_tasks: [{}],
     };
-    const { id } = props.params;
-    props.getBacklog(id);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { id } = this.props.params;
+    this.props.getBacklog(id).then(() => {
+      this.setState({ project_tasks: this.props.backlog.project_tasks });
+    });
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
@@ -26,8 +30,9 @@ class ProjectBoard extends Component {
 
   render() {
     const { id } = this.props.params;
-    const { project_tasks } = this.props.backlog;
+
     const { errors } = this.state;
+    const { project_tasks } = this.state;
 
     let BoardContent;
     const boardAlgorithm = (errors, project_tasks) => {
