@@ -12,6 +12,7 @@ class Login extends Component {
       username: "",
       password: "",
       errors: {},
+      pendingApiCall: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -37,13 +38,16 @@ class Login extends Component {
   }
 
   onSubmit(e) {
+    this.setState({ pendingApiCall: true });
     e.preventDefault();
     const LoginRequest = {
       username: this.state.username,
       password: this.state.password,
     };
 
-    this.props.login(LoginRequest);
+    this.props
+      .login(LoginRequest)
+      .then(() => this.setState({ pendingApiCall: false }));
   }
 
   render() {
@@ -85,7 +89,14 @@ class Login extends Component {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <button type="submit" className="btn btn-info btn-block mt-4">
+                  {this.state.pendingApiCall && (
+                    <div className="spinner-border spinner-border-sm text-light spinner-border mr-sm-1">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  )}{" "}
+                  Submit
+                </button>
               </form>
             </div>
           </div>

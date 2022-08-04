@@ -14,6 +14,7 @@ class Register extends Component {
       password: "",
       confirmPassword: "",
       errors: {},
+      pendingApiCall: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -32,6 +33,7 @@ class Register extends Component {
   }
 
   onSubmit(e) {
+    this.setState({ pendingApiCall: true });
     e.preventDefault();
     const newUser = {
       username: this.state.username,
@@ -40,7 +42,9 @@ class Register extends Component {
       confirmPassword: this.state.confirmPassword,
     };
 
-    this.props.createNewUser(newUser, this.props.navigate);
+    this.props
+      .createNewUser(newUser, this.props.navigate)
+      .then(() => this.setState({ pendingApiCall: false }));
   }
 
   onChange(e) {
@@ -119,7 +123,14 @@ class Register extends Component {
                     </div>
                   )}
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <button type="submit" className="btn btn-info btn-block mt-4">
+                  {this.state.pendingApiCall && (
+                    <div className="spinner-border spinner-border-sm text-light spinner-border mr-sm-1">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  )}{" "}
+                  Submit
+                </button>
               </form>
             </div>
           </div>
